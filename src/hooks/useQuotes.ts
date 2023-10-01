@@ -4,18 +4,26 @@ import {
   GetQuoteParams,
   GetQuoteResponse,
   getQuotes,
+  postQuote,
   Quote,
+  QuoteInput,
   removeDownvoteQuote,
   removeUpvoteQuote,
   upvoteQuote,
 } from '../http-services/quotes';
 
 type UseQuotesParams = GetQuoteParams;
+
 export function useQuotes(params: UseQuotesParams) {
   const [data, setData] = useState<GetQuoteResponse>({
     quotes: [],
     quotesCount: 0,
   });
+
+  const fetchQuotes = useCallback(async () => {
+    const res = await getQuotes(params);
+    setData(res.data);
+  }, [params]);
 
   const updateQuote = useCallback(
     (quote: Quote) => {
@@ -64,11 +72,17 @@ export function useQuotes(params: UseQuotesParams) {
     [updateQuote],
   );
 
+  const addQuote = useCallback(
+    async (formData: QuoteInput) => {
+      await postQuote(formData);
+      await fetchQuotes();
+    },
+    [fetchQuotes],
+  );
+
   useEffect(() => {
-    getQuotes(params).then((res) => {
-      setData(res.data);
-    });
-  }, [params]);
+    fetchQuotes();
+  }, [fetchQuotes]);
 
   return {
     ...data,
@@ -76,5 +90,6 @@ export function useQuotes(params: UseQuotesParams) {
     removeUpvote,
     downvote,
     removeDownvote,
+    addQuote,
   };
 }

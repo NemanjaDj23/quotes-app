@@ -15,7 +15,7 @@ function Login() {
   const [error, setError] = useState<string | null>(null);
   const { values, handleChange } = useForm({ username: '', password: '' });
 
-  const handleLogin = async (event: React.SyntheticEvent) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!values.username || !values.password) {
       setError(LoginError.NO_CREDENTIALS);

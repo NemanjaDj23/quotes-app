@@ -51,13 +51,13 @@ export async function getQuotes(params: GetQuoteParams) {
   });
 }
 
-type QuotesInput = {
+export type QuoteInput = {
   content: string;
   author: string;
   tags: string[];
 };
 
-export async function postQuote(quoteInput: QuotesInput) {
+export async function postQuote(quoteInput: QuoteInput) {
   return await request<Quote>({
     url: API_ROUTES.QUOTES,
     method: 'POST',

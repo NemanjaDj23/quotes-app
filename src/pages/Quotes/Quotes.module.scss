@@ -1,7 +1,26 @@
 .quotes {
   display: flex;
   flex-direction: column;
+  position: relative;
   align-items: center;
   padding: 2rem;
   gap: 3rem;
+
+  .btnGreen {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background-color: rgb(14, 140, 14);
+    border: none;
+
+     &:hover {
+       background-color: rgba(14, 140, 14, 0.6);
+     }
+  }
+
+  .filtersWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+  }
 }

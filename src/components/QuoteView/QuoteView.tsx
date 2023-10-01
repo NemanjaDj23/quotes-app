@@ -11,6 +11,7 @@ type QuoteViewProps = {
   onDownvote: (id: string) => void;
   onRemoveDownvote: (id: string) => void;
 };
+
 function QuoteView({
   quote,
   onUpvote,
@@ -18,9 +19,10 @@ function QuoteView({
   onDownvote,
   onRemoveDownvote,
 }: QuoteViewProps) {
-  const votePercentage = Math.round(
-    (quote.upvotesCount / (quote.upvotesCount + quote.downvotesCount)) * 100,
-  );
+  const votePercentage =
+    quote.upvotesCount + quote.downvotesCount > 0
+      ? Math.round((quote.upvotesCount / (quote.upvotesCount + quote.downvotesCount)) * 100)
+      : 0;
 
   const handleUpvoteClick = () => {
     const { id } = quote;

@@ -9,7 +9,7 @@ function App() {
   return (
     <Routes>
       {!isLoggedIn && <Route index={true} element={<Login />} />}
-      {isLoggedIn && <Route index={true} element={<Quotes />} />}
+      {isLoggedIn && <Route index={true} element={<Quotes />}></Route>}
     </Routes>
   );
 }

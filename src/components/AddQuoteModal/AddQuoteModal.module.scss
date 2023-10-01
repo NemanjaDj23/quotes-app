@@ -1,0 +1,30 @@
+.addQuoteModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0.5;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    z-index: 20;
+  }
+}
+
+
