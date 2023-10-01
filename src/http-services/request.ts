@@ -7,7 +7,17 @@ type RequestParams = {
   useToken?: boolean;
 };
 
-export async function request({ url, method, body, useToken }: RequestParams) {
+type RequestResponse<T> = {
+  data: T;
+  error?: string;
+};
+
+export async function request<T>({
+  url,
+  method,
+  body,
+  useToken,
+}: RequestParams): Promise<RequestResponse<T>> {
   const apiUrl = process.env.REACT_APP_API_URL;
   const requestUrl = apiUrl + url;
   const headers: Record<string, string> = {
