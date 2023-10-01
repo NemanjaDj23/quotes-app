@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 
-type UseFormOutput = {
-  values: Record<string, any>;
+type UseFormOutput<T> = {
+  values: T;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function useForm(initialValue: Record<string, any>): UseFormOutput {
+export function useForm<T>(initialValue: T): UseFormOutput<T> {
   const [values, setValues] = useState(initialValue);
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
