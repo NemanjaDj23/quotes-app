@@ -101,3 +101,11 @@ export async function removeDownvoteQuote(id: string) {
     useToken: true,
   });
 }
+
+export async function getTags() {
+  return await request<string[]>({
+    url: API_ROUTES.TAGS,
+    method: 'GET',
+    useToken: true,
+  });
+}

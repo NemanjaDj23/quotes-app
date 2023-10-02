@@ -4,6 +4,7 @@ import {
   GetQuoteParams,
   GetQuoteResponse,
   getQuotes,
+  getTags,
   postQuote,
   Quote,
   QuoteInput,
@@ -20,10 +21,17 @@ export function useQuotes(params: UseQuotesParams) {
     quotesCount: 0,
   });
 
+  const [tags, setTags] = useState<string[]>([]);
+
   const fetchQuotes = useCallback(async () => {
     const res = await getQuotes(params);
     setData(res.data);
   }, [params]);
+
+  const fetchTags = useCallback(async () => {
+    const res = await getTags();
+    setTags(res.data);
+  }, []);
 
   const updateQuote = useCallback(
     (quote: Quote) => {
@@ -75,17 +83,19 @@ export function useQuotes(params: UseQuotesParams) {
   const addQuote = useCallback(
     async (formData: QuoteInput) => {
       await postQuote(formData);
-      await fetchQuotes();
+      await Promise.all([fetchQuotes(), fetchTags()]);
     },
-    [fetchQuotes],
+    [fetchQuotes, fetchTags],
   );
 
   useEffect(() => {
     fetchQuotes();
-  }, [fetchQuotes]);
+    fetchTags();
+  }, [fetchQuotes, fetchTags]);
 
   return {
     ...data,
+    tags,
     upvote,
     removeUpvote,
     downvote,
