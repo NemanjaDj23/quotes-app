@@ -27,7 +27,7 @@ export function SortDirectionControl({ name, value, sortBy, onChange }: SortDire
   return (
     <div className='filterWrapper'>
       Sort Direction
-      <div className='flex'>
+      <div>
         {Object.values(SortDirection).map((sortDirectionValue) => (
           <label key={sortDirectionValue} htmlFor={sortDirectionValue}>
             <input

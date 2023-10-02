@@ -19,7 +19,6 @@ function isFirstPageSeparatorVisible(page: number, currentPage: number, totalPag
 }
 
 function isLastPageSeparatorVisible(page: number, currentPage: number, totalPages: number) {
-  console.log(totalPages, page, currentPage);
   return page === totalPages && Number(currentPage) < totalPages - 2;
 }
 
@@ -28,24 +27,28 @@ function Pagination({ totalItems, currentPage, pageSize, onPageChange }: Paginat
   const visiblePages = getVisiblePages(Number(currentPage), totalPages);
 
   return (
-    <ul className={styles.paginationWrapper}>
-      {visiblePages.map((page) => (
-        <>
-          {isLastPageSeparatorVisible(page, currentPage, totalPages) && <span>...</span>}
-          <li key={page}>
-            <button
-              className={page === Number(currentPage) ? styles.active : ''}
-              onClick={onPageChange}
-              value={page}
-              name='page'
-            >
-              {page}
-            </button>
-          </li>
-          {isFirstPageSeparatorVisible(page, currentPage, totalPages) && <span>...</span>}
-        </>
-      ))}
-    </ul>
+    <>
+      {totalPages > 1 && (
+        <ul className={styles.paginationWrapper}>
+          {visiblePages.map((page) => (
+            <>
+              {isLastPageSeparatorVisible(page, currentPage, totalPages) && <span>...</span>}
+              <li key={page}>
+                <button
+                  className={page === Number(currentPage) ? styles.active : ''}
+                  onClick={onPageChange}
+                  value={page}
+                  name='page'
+                >
+                  {page}
+                </button>
+              </li>
+              {isFirstPageSeparatorVisible(page, currentPage, totalPages) && <span>...</span>}
+            </>
+          ))}
+        </ul>
+      )}
+    </>
   );
 }
 

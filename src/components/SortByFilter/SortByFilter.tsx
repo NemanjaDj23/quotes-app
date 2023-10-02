@@ -17,7 +17,7 @@ export function SortByFilter({ name, value, onChange }: SortByFilterProps) {
   return (
     <div className='filterWrapper'>
       Sort By
-      <div className='flex'>
+      <div>
         {Object.values(SortBy).map((sortByValue) => (
           <label key={sortByValue} htmlFor={sortByValue}>
             <input

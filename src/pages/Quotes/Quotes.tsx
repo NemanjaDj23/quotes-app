@@ -9,10 +9,12 @@ import AddQuoteModal from '../../components/AddQuoteModal/AddQuoteModal';
 import { SortByFilter } from '../../components/SortByFilter/SortByFilter';
 import { SortDirectionControl } from '../../components/SortDirectionControl/SortDirectionControl';
 import Pagination from '../../components/Pagination/Pagination';
+import PageSizeControl from '../../components/PageSizeControl/PageSizeControl';
+import TagsFilterControl from '../../components/TagsFilterControl/TagsFilterControl';
 
 const defaultParams = {
   page: 1,
-  pageSize: 8,
+  pageSize: 5,
   sortBy: SortBy.CREATED_AT,
   sortDirection: SortDirection.DESC,
   tags: '',
@@ -21,7 +23,7 @@ const defaultParams = {
 function Quotes() {
   const [showAddQuoteModal, setShowAddQuoteModal] = useState(false);
   const { values, handleChange } = useForm(defaultParams);
-  const { quotes, quotesCount, upvote, downvote, removeUpvote, removeDownvote, addQuote } =
+  const { quotes, quotesCount, tags, upvote, downvote, removeUpvote, removeDownvote, addQuote } =
     useQuotes(values);
 
   const handleOpenModal = () => {
@@ -43,46 +45,50 @@ function Quotes() {
       <button onClick={handleOpenModal} className={styles.btnGreen}>
         Add Quote
       </button>
-      <div className={styles.filtersWrapper}>
-        <SortByFilter value={values.sortBy} name='sortBy' onChange={handleChange} />
+      <div className={styles.container}>
+        <div className={styles.filtersWrapper}>
+          <SortByFilter value={values.sortBy} name='sortBy' onChange={handleChange} />
 
-        <SortDirectionControl
-          name='sortDirection'
-          value={values.sortDirection}
-          sortBy={values.sortBy}
-          onChange={handleChange}
-        />
+          <SortDirectionControl
+            name='sortDirection'
+            value={values.sortDirection}
+            sortBy={values.sortBy}
+            onChange={handleChange}
+          />
+
+          <TagsFilterControl
+            tags={tags}
+            currentTag={values.tags}
+            onChangeSelectedTag={handleChange}
+          />
+        </div>
+
+        {quotes.map((quote) => (
+          <QuoteView
+            key={quote.id}
+            quote={quote}
+            onDownvote={downvote}
+            onRemoveDownvote={removeDownvote}
+            onRemoveUpvote={removeUpvote}
+            onUpvote={upvote}
+          />
+        ))}
+        <div className={styles.pageControlsWrapper}>
+          <PageSizeControl
+            currentPageSize={values.pageSize}
+            onChangePageSize={handleChange}
+          ></PageSizeControl>
+          <Pagination
+            currentPage={values.page}
+            pageSize={values.pageSize}
+            totalItems={quotesCount}
+            onPageChange={handleChange as any}
+          />
+        </div>
+        {showAddQuoteModal && (
+          <AddQuoteModal onClose={handleCloseModal} onSubmit={handleSubmitModalForm} />
+        )}
       </div>
-
-      <label>Page Size</label>
-      <input type='text' name='pageSize' value={values.pageSize} onChange={handleChange} />
-
-      <br />
-
-      <label>Tags</label>
-      <input type='text' name='tags' value={values.tags} onChange={handleChange} />
-
-      {quotes.map((quote) => (
-        <QuoteView
-          key={quote.id}
-          quote={quote}
-          onDownvote={downvote}
-          onRemoveDownvote={removeDownvote}
-          onRemoveUpvote={removeUpvote}
-          onUpvote={upvote}
-        />
-      ))}
-
-      <Pagination
-        currentPage={values.page}
-        pageSize={values.pageSize}
-        totalItems={quotesCount}
-        onPageChange={handleChange as any}
-      />
-
-      {showAddQuoteModal && (
-        <AddQuoteModal onClose={handleCloseModal} onSubmit={handleSubmitModalForm} />
-      )}
     </div>
   );
 }

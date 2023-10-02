@@ -45,6 +45,13 @@ button {
   }
 }
 
+select {
+  padding: 0.3rem;
+  outline: none;
+  border-radius: 6px;
+  padding: .5rem;
+}
+
 h1 {
   color: #ffffff;
   font-size: 3rem;
@@ -72,4 +79,12 @@ h1 {
 
 .flex {
   display: flex;
+}
+
+.dropdown-select {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  color: #fff;
+  font-weight: 600;
 }
