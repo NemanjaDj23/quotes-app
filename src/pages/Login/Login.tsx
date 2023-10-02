@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
-import { login } from '../../http-services/auth';
 import styles from './Login.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { login } from '../../http-services/auth';
 
 enum LoginError {
   NO_CREDENTIALS = 'Please enter credentials.',
   WRONG_CREDENTIALS = 'Wrong credentials.',
 }
 
-function Login() {
+type LoginProps = {
+  onLogin: typeof login;
+};
+
+function Login({ onLogin }: LoginProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { values, handleChange } = useForm({ username: '', password: '' });
@@ -20,7 +24,7 @@ function Login() {
     if (!values.username || !values.password) {
       setError(LoginError.NO_CREDENTIALS);
     } else {
-      const { error } = await login(values.username, values.password);
+      const { error } = await onLogin(values.username, values.password);
       if (error) {
         setError(LoginError.WRONG_CREDENTIALS);
       }
@@ -29,6 +33,7 @@ function Login() {
 
   return (
     <div className={styles.loginWrapper}>
+      <h1>Quotes</h1>
       <form onSubmit={handleLogin}>
         {error && <div className={styles.alert}>{error}</div>}
         <div className={styles.formGroup}>

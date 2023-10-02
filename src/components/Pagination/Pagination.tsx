@@ -31,9 +31,9 @@ function Pagination({ totalItems, currentPage, pageSize, onPageChange }: Paginat
       {totalPages > 1 && (
         <ul className={styles.paginationWrapper}>
           {visiblePages.map((page) => (
-            <>
+            <React.Fragment key={page}>
               {isLastPageSeparatorVisible(page, currentPage, totalPages) && <span>...</span>}
-              <li key={page}>
+              <li>
                 <button
                   className={page === Number(currentPage) ? styles.active : ''}
                   onClick={onPageChange}
@@ -44,7 +44,7 @@ function Pagination({ totalItems, currentPage, pageSize, onPageChange }: Paginat
                 </button>
               </li>
               {isFirstPageSeparatorVisible(page, currentPage, totalPages) && <span>...</span>}
-            </>
+            </React.Fragment>
           ))}
         </ul>
       )}

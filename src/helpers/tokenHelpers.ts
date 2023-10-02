@@ -11,3 +11,5 @@ export function getTokenFromLocalStorage(): string {
 export function removeTokenFromLocalStorage() {
   localStorage.removeItem(TOKEN_KEY);
 }
+
+function dispatchTokenUpdate() {}

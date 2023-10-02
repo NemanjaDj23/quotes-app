@@ -29,6 +29,10 @@ input, textarea {
   border-radius: 6px;
 }
 
+textarea {
+  resize: none;
+}
+
 button {
   font-weight: 600;
   color: #fff;

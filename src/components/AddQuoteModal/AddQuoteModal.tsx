@@ -27,12 +27,18 @@ function AddQuoteModal(props: AddModalProps) {
     <div className={styles.addQuoteModal}>
       <div className={styles.overlay} onClick={onClose}></div>
       <form className={styles.content} onSubmit={handleSubmit}>
-        <label>Content</label>
-        <textarea rows={4} name='content' value={values.content} onChange={handleChange} />
-        <label>Author</label>
-        <input type='text' name='author' value={values.author} onChange={handleChange} />
-        <label>Tags</label>
-        <input type='text' name='tags' value={values.tags} onChange={handleChange} />
+        <div className='formGroup'>
+          <label>Content</label>
+          <textarea rows={4} name='content' value={values.content} onChange={handleChange} />
+        </div>
+        <div className='formGroup'>
+          <label>Author</label>
+          <input type='text' name='author' value={values.author} onChange={handleChange} />
+        </div>
+        <div className='formGroup'>
+          <label>Tags</label>
+          <input type='text' name='tags' value={values.tags} onChange={handleChange} />
+        </div>
         <button type='submit'>Add Quote</button>
       </form>
     </div>

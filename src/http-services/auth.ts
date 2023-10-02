@@ -5,6 +5,7 @@ import { removeTokenFromLocalStorage, setTokenToLocalStorage } from '../helpers/
 type LoginResponse = {
   token: string;
 };
+
 export async function login(username: string, password: string) {
   const req = await request<LoginResponse>({
     url: API_ROUTES.TOKEN,

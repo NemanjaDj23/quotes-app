@@ -5,6 +5,7 @@ type UseFormOutput<T> = {
   handleChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => void;
+  setFieldValue: (valueObject: Partial<T>) => void;
 };
 
 export function useForm<T>(initialValue: T): UseFormOutput<T> {
@@ -18,5 +19,15 @@ export function useForm<T>(initialValue: T): UseFormOutput<T> {
     [],
   );
 
-  return { values, handleChange };
+  const setFieldValue = useCallback(
+    (valueObject: Partial<T>) => {
+      setValues((prevState) => ({
+        ...prevState,
+        ...valueObject,
+      }));
+    },
+    [setValues],
+  );
+
+  return { values, handleChange, setFieldValue };
 }

@@ -1,15 +1,16 @@
 import React from 'react';
 import Login from './pages/Login/Login';
 import { Route, Routes } from 'react-router-dom';
-import { getTokenFromLocalStorage } from './helpers/tokenHelpers';
 import Quotes from './pages/Quotes/Quotes';
+import { useAuth } from './hooks/useAuth';
 
 function App() {
-  const isLoggedIn = !!getTokenFromLocalStorage();
+  const { isAuthenticated, handleLogin, handleLogout } = useAuth();
+
   return (
     <Routes>
-      {!isLoggedIn && <Route index={true} element={<Login />} />}
-      {isLoggedIn && <Route index={true} element={<Quotes />}></Route>}
+      {!isAuthenticated && <Route index={true} element={<Login onLogin={handleLogin} />} />}
+      {isAuthenticated && <Route index={true} element={<Quotes onLogout={handleLogout} />}></Route>}
     </Routes>
   );
 }

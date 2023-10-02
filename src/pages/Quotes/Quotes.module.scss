@@ -15,16 +15,30 @@
     padding: 2rem;
   }
 
-  .btnGreen {
+  .btnWrapper {
     position: fixed;
     top: 2rem;
     right: 2rem;
+  }
+
+  .btnGreen {
     background-color: rgb(14, 140, 14);
     border: none;
+    transition: .2s ease;
 
      &:hover {
-       background-color: rgba(14, 140, 14, 0.6);
+       filter: brightness(.9);
      }
+  }
+
+  .logoutBtn {
+    background-color: transparent;
+    border: none;
+    margin-left: 1.4rem;
+
+    &:hover {
+      background-color: #747494;
+    }
   }
 
   .filtersWrapper {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QuoteView from '../../components/QuoteView/QuoteView';
 
 import styles from './Quotes.module.scss';
@@ -11,6 +11,9 @@ import { SortDirectionControl } from '../../components/SortDirectionControl/Sort
 import Pagination from '../../components/Pagination/Pagination';
 import PageSizeControl from '../../components/PageSizeControl/PageSizeControl';
 import TagsFilterControl from '../../components/TagsFilterControl/TagsFilterControl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { logout } from '../../http-services/auth';
 
 const defaultParams = {
   page: 1,
@@ -20,11 +23,19 @@ const defaultParams = {
   tags: '',
 };
 
-function Quotes() {
+type QuotesProps = {
+  onLogout: typeof logout;
+};
+
+function Quotes({ onLogout }: QuotesProps) {
   const [showAddQuoteModal, setShowAddQuoteModal] = useState(false);
-  const { values, handleChange } = useForm(defaultParams);
+  const { values, handleChange, setFieldValue } = useForm(defaultParams);
   const { quotes, quotesCount, tags, upvote, downvote, removeUpvote, removeDownvote, addQuote } =
     useQuotes(values);
+
+  useEffect(() => {
+    setFieldValue({ page: 1 });
+  }, [values.pageSize, setFieldValue]);
 
   const handleOpenModal = () => {
     setShowAddQuoteModal(true);
@@ -42,9 +53,14 @@ function Quotes() {
   return (
     <div className={styles.quotes}>
       <h1>Quotes</h1>
-      <button onClick={handleOpenModal} className={styles.btnGreen}>
-        Add Quote
-      </button>
+      <div className={styles.btnWrapper}>
+        <button onClick={handleOpenModal} className={styles.btnGreen}>
+          Add Quote
+        </button>
+        <button onClick={onLogout} className={styles.logoutBtn} title='Logout'>
+          <FontAwesomeIcon icon={faArrowRightFromBracket} />
+        </button>
+      </div>
       <div className={styles.container}>
         <div className={styles.filtersWrapper}>
           <SortByFilter value={values.sortBy} name='sortBy' onChange={handleChange} />
